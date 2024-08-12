@@ -98,34 +98,39 @@ const Slide = ({ products, title, timer }) => {
         <ViewAllButton variant="contained"> View All</ViewAllButton>
       </Deal>
       <Divider />
-      <Carousel
-        responsive={responsive}
-        swipeable={false}
-        draggable={false}
-        dotListClass="custom-dot-list-style"
-        itemClass="carousel-item-padding-40-px"
-        containerClass="carousel-container"
-        infinite={true}
-        autoPlay={true}
-        autoPlaySpeed={4000}
-        keyBoardControl={true}
-        centerMode={true}
-      >
-        {shuffledProducts.map((product) => (
-          <Link to={`product/${product.id}`} style={{ textDecoration: "none" }}>
-            <Box textAlign="center" style={{ padding: "25px 14px" }}>
-              <Imgage src={product.url} alt="products" />
-              <Text style={{ fontWeight: 600, color: "#212121" }}>
-                {product.title.shortTitle}
-              </Text>
-              <Text style={{ color: "green" }}>{product.discount}</Text>
-              <Text style={{ color: "#212121", opacity: "0.6" }}>
-                {product.tagline}
-              </Text>
-            </Box>
-          </Link>
-        ))}
-      </Carousel>
+      <Box sx={{ minHeight: "200px" }}>
+        <Carousel
+          responsive={responsive}
+          swipeable={false}
+          draggable={false}
+          dotListClass="custom-dot-list-style"
+          itemClass="carousel-item-padding-40-px"
+          containerClass="carousel-container"
+          infinite={true}
+          autoPlay={true}
+          autoPlaySpeed={4000}
+          keyBoardControl={true}
+          centerMode={true}
+        >
+          {shuffledProducts.map((product) => (
+            <Link
+              to={`product/${product.id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Box textAlign="center" style={{ padding: "25px 14px" }}>
+                <Imgage src={product.url} alt="products" />
+                <Text style={{ fontWeight: 600, color: "#212121" }}>
+                  {product.title.shortTitle}
+                </Text>
+                <Text style={{ color: "green" }}>{product.discount}</Text>
+                <Text style={{ color: "#212121", opacity: "0.6" }}>
+                  {product.tagline}
+                </Text>
+              </Box>
+            </Link>
+          ))}
+        </Carousel>
+      </Box>
     </Component>
   );
 };
