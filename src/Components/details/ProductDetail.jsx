@@ -34,11 +34,6 @@ const StyledBadge = styled(Badge)`
   font-size: 15px;
 `;
 
-const StyledTable = styled(Table)`
-  min-width: 100%;
-  table-layout: fixed;
-`;
-
 const ProductDetail = ({ product }) => {
   const adURL =
     "https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_2019-07-14.png?q=50";
@@ -69,8 +64,8 @@ const ProductDetail = ({ product }) => {
           Partner OfferExtra 10% off upto ₹500 on next furniture purchase
         </Typography>
       </SmallText>
-      <Box sx={{ overflowX: "auto" }}>
-        <StyledTable>
+      <Box sx={isMobile ? { overflowX: "auto" } : {}}>
+        <Table sx={isMobile ? { minWidth: "100%", tableLayout: "fixed" } : {}}>
           <TableBody>
             <ColumnText>
               <TableCell style={{ color: "#878787" }}>Delivery</TableCell>
@@ -92,7 +87,11 @@ const ProductDetail = ({ product }) => {
             </ColumnText>
             <TableRow>
               <TableCell colSpan={2}>
-                <img src={adURL} alt="supercoin" style={{ width: "100%" }} />
+                <img
+                  src={adURL}
+                  alt="supercoin"
+                  style={isMobile ? { width: "100%" } : { width: 390 }}
+                />
               </TableCell>
             </TableRow>
             <ColumnText>
@@ -100,7 +99,7 @@ const ProductDetail = ({ product }) => {
               <TableCell>{product.description}</TableCell>
             </ColumnText>
           </TableBody>
-        </StyledTable>
+        </Table>
       </Box>
     </Box>
   );
