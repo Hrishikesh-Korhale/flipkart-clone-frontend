@@ -4,6 +4,7 @@ import { Box, Button, Divider, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import Countdown from "react-countdown";
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
 const responsive = {
   desktop: {
@@ -53,6 +54,16 @@ const ViewAllButton = styled(Button)`
 `;
 
 const Slide = ({ products, title, timer }) => {
+  const [shuffledProducts, setShuffledProducts] = useState([]);
+
+  useEffect(() => {
+    setShuffledProducts(shuffleArray([...products]));
+  }, [products]);
+
+  const shuffleArray = (array) => {
+    return array.sort(() => Math.random() - 0.5);
+  };
+
   const timerURL =
     "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/timer_a73398.svg";
 
@@ -64,9 +75,9 @@ const Slide = ({ products, title, timer }) => {
     );
   };
 
-  const Imgage = styled('img')({
-    width: 'auto',
-    height: 150
+  const Imgage = styled("img")({
+    width: "auto",
+    height: 150,
   });
 
   const Text = styled(Typography)`
@@ -78,12 +89,12 @@ const Slide = ({ products, title, timer }) => {
     <Component>
       <Deal>
         <DealText>{title}</DealText>
-        { timer && 
+        {timer && (
           <Timer>
-          <img src={timerURL} alt="timer" style={{ width: 24 }} />
-          <Countdown date={Date.now() + 5.04e7} renderer={renderer} />
+            <img src={timerURL} alt="timer" style={{ width: 24 }} />
+            <Countdown date={Date.now() + 5.04e7} renderer={renderer} />
           </Timer>
-        }
+        )}
         <ViewAllButton variant="contained"> View All</ViewAllButton>
       </Deal>
       <Divider />
@@ -100,14 +111,18 @@ const Slide = ({ products, title, timer }) => {
         keyBoardControl={true}
         centerMode={true}
       >
-        {products.map((product) => (
-          <Link to={`product/${product.id}`} style={{textDecoration: 'none'}}>
-          <Box textAlign="center" style={{padding: '25px 14px'}}>
-            <Imgage src={product.url} alt="products" />
-            <Text style={{fontWeight: 600, color: '#212121'}}>{product.title.shortTitle}</Text>
-            <Text style={{color: 'green'}}>{product.discount}</Text>
-            <Text style={{color: '#212121', opacity: '0.6'}}>{product.tagline}</Text>
-          </Box>
+        {shuffledProducts.map((product) => (
+          <Link to={`product/${product.id}`} style={{ textDecoration: "none" }}>
+            <Box textAlign="center" style={{ padding: "25px 14px" }}>
+              <Imgage src={product.url} alt="products" />
+              <Text style={{ fontWeight: 600, color: "#212121" }}>
+                {product.title.shortTitle}
+              </Text>
+              <Text style={{ color: "green" }}>{product.discount}</Text>
+              <Text style={{ color: "#212121", opacity: "0.6" }}>
+                {product.tagline}
+              </Text>
+            </Box>
           </Link>
         ))}
       </Carousel>
