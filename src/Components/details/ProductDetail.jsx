@@ -6,6 +6,7 @@ import {
   TableRow,
   TableCell,
   styled,
+  useMediaQuery,
 } from "@mui/material";
 import { LocalOffer as Badge } from "@mui/icons-material";
 
@@ -33,13 +34,20 @@ const StyledBadge = styled(Badge)`
   font-size: 15px;
 `;
 
+const StyledTable = styled(Table)`
+  min-width: 100%;
+  table-layout: fixed;
+`;
+
 const ProductDetail = ({ product }) => {
   const adURL =
     "https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_2019-07-14.png?q=50";
   const date = new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000);
 
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
   return (
-    <>
+    <Box>
       <Typography>Available offers</Typography>
       <SmallText>
         <Typography>
@@ -61,38 +69,40 @@ const ProductDetail = ({ product }) => {
           Partner OfferExtra 10% off upto ₹500 on next furniture purchase
         </Typography>
       </SmallText>
-      <Table>
-        <TableBody>
-          <ColumnText>
-            <TableCell style={{ color: "#878787" }}>Delivery</TableCell>
-            <TableCell style={{ fontWeight: 600 }}>
-              Delivery by {date.toDateString()} | ₹40
-            </TableCell>
-          </ColumnText>
-          <ColumnText>
-            <TableCell style={{ color: "#878787" }}>Warranty</TableCell>
-            <TableCell>No Warranty</TableCell>
-          </ColumnText>
-          <ColumnText>
-            <TableCell style={{ color: "#878787" }}>Seller</TableCell>
-            <TableCell>
-              <span style={{ color: "#2874f0" }}>SuperComNet</span>
-              <Typography>GST invoice available</Typography>
-              <Typography>View more sellers starting from ₹329</Typography>
-            </TableCell>
-          </ColumnText>
-          <TableRow>
-            <TableCell colSpan={2}>
-              <img src={adURL} alt="supercoin" style={{ width: 390 }} />
-            </TableCell>
-          </TableRow>
-          <ColumnText>
-            <TableCell style={{ color: "#878787" }}>Description</TableCell>
-            <TableCell>{product.description}</TableCell>
-          </ColumnText>
-        </TableBody>
-      </Table>
-    </>
+      <Box sx={{ overflowX: "auto" }}>
+        <StyledTable>
+          <TableBody>
+            <ColumnText>
+              <TableCell style={{ color: "#878787" }}>Delivery</TableCell>
+              <TableCell style={{ fontWeight: 600 }}>
+                Delivery by {date.toDateString()} | ₹40
+              </TableCell>
+            </ColumnText>
+            <ColumnText>
+              <TableCell style={{ color: "#878787" }}>Warranty</TableCell>
+              <TableCell>No Warranty</TableCell>
+            </ColumnText>
+            <ColumnText>
+              <TableCell style={{ color: "#878787" }}>Seller</TableCell>
+              <TableCell>
+                <span style={{ color: "#2874f0" }}>SuperComNet</span>
+                <Typography>GST invoice available</Typography>
+                <Typography>View more sellers starting from ₹329</Typography>
+              </TableCell>
+            </ColumnText>
+            <TableRow>
+              <TableCell colSpan={2}>
+                <img src={adURL} alt="supercoin" style={{ width: "100%" }} />
+              </TableCell>
+            </TableRow>
+            <ColumnText>
+              <TableCell style={{ color: "#878787" }}>Description</TableCell>
+              <TableCell>{product.description}</TableCell>
+            </ColumnText>
+          </TableBody>
+        </StyledTable>
+      </Box>
+    </Box>
   );
 };
 
