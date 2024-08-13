@@ -107,7 +107,7 @@ const Slide = ({ products, title, timer }) => {
       </Deal>
       <Divider />
       <Box sx={{ my: 2 }}>
-        {shuffledProducts.length !== 0 ? (
+        {shuffledProducts.length === 0 ? (
           <Carousel
             responsive={responsive}
             swipeable={false}
