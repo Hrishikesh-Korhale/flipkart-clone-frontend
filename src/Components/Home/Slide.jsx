@@ -1,10 +1,11 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography, Skeleton } from "@mui/material";
 import styled from "@emotion/styled";
 import Countdown from "react-countdown";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const responsive = {
   desktop: {
@@ -53,7 +54,18 @@ const ViewAllButton = styled(Button)`
   font-weight: 600;
 `;
 
+const Imgage = styled("img")({
+  width: "auto",
+  height: 150,
+});
+
+const Text = styled(Typography)`
+  font-size: 14px;
+  margin-top: 5px;
+`;
+
 const Slide = ({ products, title, timer }) => {
+  const navigate = useNavigate();
   const [shuffledProducts, setShuffledProducts] = useState([]);
 
   useEffect(() => {
@@ -75,15 +87,9 @@ const Slide = ({ products, title, timer }) => {
     );
   };
 
-  const Imgage = styled("img")({
-    width: "auto",
-    height: 150,
-  });
-
-  const Text = styled(Typography)`
-    font-size: 14px;
-    margin-top: 5px;
-  `;
+  const viewAllClick = () => {
+    navigate("/viewall");
+  };
 
   return (
     <Component>
@@ -95,41 +101,84 @@ const Slide = ({ products, title, timer }) => {
             <Countdown date={Date.now() + 5.04e7} renderer={renderer} />
           </Timer>
         )}
-        <ViewAllButton variant="contained"> View All</ViewAllButton>
+        <ViewAllButton variant="contained" onClick={viewAllClick}>
+          View All
+        </ViewAllButton>
       </Deal>
       <Divider />
-      <Box sx={{ minHeight: "200px" }}>
-        <Carousel
-          responsive={responsive}
-          swipeable={false}
-          draggable={false}
-          dotListClass="custom-dot-list-style"
-          itemClass="carousel-item-padding-40-px"
-          containerClass="carousel-container"
-          infinite={true}
-          autoPlay={true}
-          autoPlaySpeed={4000}
-          keyBoardControl={true}
-          centerMode={true}
-        >
-          {shuffledProducts.map((product) => (
-            <Link
-              to={`product/${product.id}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Box textAlign="center" style={{ padding: "25px 14px" }}>
-                <Imgage src={product.url} alt="products" />
-                <Text style={{ fontWeight: 600, color: "#212121" }}>
-                  {product.title.shortTitle}
-                </Text>
-                <Text style={{ color: "green" }}>{product.discount}</Text>
-                <Text style={{ color: "#212121", opacity: "0.6" }}>
-                  {product.tagline}
-                </Text>
+      <Box sx={{ my: 2 }}>
+        {shuffledProducts.length !== 0 ? (
+          <Carousel
+            responsive={responsive}
+            swipeable={false}
+            draggable={false}
+            dotListClass="custom-dot-list-style"
+            itemClass="carousel-item-padding-40-px"
+            containerClass="carousel-container"
+            infinite={true}
+            autoPlay={true}
+            autoPlaySpeed={4000}
+            keyBoardControl={true}
+            centerMode={true}
+          >
+            {Array.from(new Array(10)).map((_, index) => (
+              <Box
+                sx={{
+                  m: 2,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  flexDirection: "column",
+                }}
+              >
+                <Skeleton
+                  key={index}
+                  variant="rectangular"
+                  width={150}
+                  height={140}
+                  animation="wave"
+                  sx={{ borderRadius: "20px", width: "100%" }}
+                />
+                <Skeleton animation="wave" width={150} sx={{ width: "100%" }} />
+                <Skeleton animation="wave" width={150} sx={{ width: "100%" }} />
               </Box>
-            </Link>
-          ))}
-        </Carousel>
+            ))}
+          </Carousel>
+        ) : (
+          <Carousel
+            responsive={responsive}
+            swipeable={false}
+            draggable={false}
+            dotListClass="custom-dot-list-style"
+            itemClass="carousel-item-padding-40-px"
+            containerClass="carousel-container"
+            infinite={true}
+            autoPlay={true}
+            autoPlaySpeed={4000}
+            keyBoardControl={true}
+            centerMode={true}
+          >
+            {shuffledProducts.map((product) => (
+              <Link
+                key={product.id}
+                to={`product/${product.id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <Box textAlign="center" style={{ padding: "25px 14px" }}>
+                  <Imgage src={product.url} alt="products" />
+                  <Text style={{ fontWeight: 600, color: "#212121" }}>
+                    {product.title.shortTitle}
+                  </Text>
+                  <Text style={{ color: "green" }}>{product.discount}</Text>
+                  <Text style={{ color: "#212121", opacity: "0.6" }}>
+                    {product.tagline}
+                  </Text>
+                </Box>
+              </Link>
+            ))}
+          </Carousel>
+        )}
       </Box>
     </Component>
   );

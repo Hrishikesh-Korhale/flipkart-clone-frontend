@@ -5,6 +5,7 @@ import DataProvider from "./contex/dataProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DetailView from "./Components/details/DetailView";
 import Cart from "./Components/Cart/Cart";
+import ViewAll from "./Components/viewAll/viewAll";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<DetailView />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/viewall" element={<ViewAll />} />
           </Routes>
         </Box>
       </BrowserRouter>

@@ -2,62 +2,64 @@ import styled from "@emotion/styled";
 import Slide from "./Slide";
 import { Box } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
 
 const theme = createTheme({
-    
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 960,
-        lg: 1280,
-        xl: 1920,
-      },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
     },
-  });
+  },
+});
 
 const Container = styled(Box)`
-    display: flex;
+  display: flex;
 `;
 
-const LeftContainer = styled(Box)(({ theme}) => ({
-    width: '83%',
-    [theme.breakpoints.down('md')]: {
-        width: '100%'
-    }
-}))
-
-const RightContainer = styled(Box)(({ theme}) => ({
-    marginTop: 10,
-    background: '#FFFFFF',
-    width: '17%',
-    marginLeft: 10,
-    padding: 5,
-    textAlign: 'center',
-    [theme.breakpoints.down('md')]: {
-        display: 'none'
-    }
+const LeftContainer = styled(Box)(({ theme }) => ({
+  width: "83%",
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
+  },
 }));
 
-const MidSlide = ({products}) =>{
-    const adURL = 'https://rukminim1.flixcart.com/flap/464/708/image/633789f7def60050.jpg?q=70';
+const RightContainer = styled(Box)(({ theme }) => ({
+  marginTop: 10,
+  background: "#FFFFFF",
+  width: "17%",
+  marginLeft: 10,
+  padding: 5,
+  textAlign: "center",
+  [theme.breakpoints.down("md")]: {
+    display: "none",
+  },
+}));
 
-    return(
-        <ThemeProvider theme={theme}>
-        <Container>
-            <LeftContainer>
-            <Slide 
-                    products={products} 
-                    title='Deals of the Day'
-                    timer={true} 
-                    multi={true} 
-                />
-            </LeftContainer>
-            <RightContainer>
-                <img src={adURL} alt="advertise" style={{width: 217}} />
-            </RightContainer>
-        </Container>
-        </ThemeProvider>
-    )
-}
+const MidSlide = ({ products }) => {
+  const adURL =
+    "https://rukminim1.flixcart.com/flap/464/708/image/633789f7def60050.jpg?q=70";
+  const isMobile = useMediaQuery("(max-width:600px)");
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container>
+        <LeftContainer>
+          <Slide
+            products={products}
+            title="Deals of the Day"
+            timer={!isMobile}
+            multi={true}
+          />
+        </LeftContainer>
+        <RightContainer>
+          <img src={adURL} alt="advertise" style={{ width: 217 }} />
+        </RightContainer>
+      </Container>
+    </ThemeProvider>
+  );
+};
 export default MidSlide;
